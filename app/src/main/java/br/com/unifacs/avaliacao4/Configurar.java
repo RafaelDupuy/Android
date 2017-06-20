@@ -12,18 +12,64 @@ import android.widget.Toast;
 
 public class Configurar extends Activity {
     SharedPreferences sharedPreferences;
-    private Boolean traffic,indoors,map3d;
-    private String mapType,unitSpeed;
-    private Color On;
-    private Button trafficOn,trafficOff,satellite,normal,indoorsButtonOn,indoorsButtonOff,exitButton,
-    map3dButtonOn,map3dButtonOff,unitSpeedKm,unitSpeedMph;
+    private Boolean traffic,indoors,map3d,cameraLock;
+    private String mapType,unitSpeed,coordinatesFormat;
+    private Button trafficOn,trafficOff,
+            satellite,normal,
+            indoorsButtonOn,indoorsButtonOff,
+            map3dButtonOn,map3dButtonOff,
+            unitSpeedKm,unitSpeedMph,
+            cameraLockButtonOn,cameraLockButtonOff,degreesButton,minutesButton,secondsButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configurar);
-        sharedPreferences = getSharedPreferences("Myprefs", Context.MODE_PRIVATE);
+
+
+        //SharedPreferences e configuracoes ativadas
+        sharedPreferences = getSharedPreferences("Myprefs",Context.MODE_PRIVATE);
+
+        if(sharedPreferences.getString("maptype","normal").equals("normal")){
+            mapType = "normal";
+        }else{
+            mapType = "satellite";
+        }
+        if(sharedPreferences.getBoolean("traffic",true)){
+            traffic = true;
+        }else{
+            traffic = false;
+        }
+        if(sharedPreferences.getBoolean("indoors",true)){
+            indoors = true;
+        }else{
+            indoors = false;
+        }
+        if(sharedPreferences.getBoolean("map3d",true)){
+            map3d = true;
+        }else{
+            map3d = false;
+        }
+        if(sharedPreferences.getString("unitspeed","kmh").equals("kmh")){
+            unitSpeed = "kmh";
+        }else{
+            unitSpeed = "mph";
+        }
+        if(sharedPreferences.getBoolean("cameralock",true)){
+            cameraLock = true;
+        }else{
+            cameraLock = false;
+        }
+        if(sharedPreferences.getString("coordinatesformat","degrees").equals("degrees")) {
+            coordinatesFormat = "degrees";
+        }
+        if(sharedPreferences.getString("coordinatesformat","minutes").equals("minutes")){
+            coordinatesFormat = "minutes";
+        }
+        if(sharedPreferences.getString("coordinatesformat","seconds").equals("seconds")){
+            coordinatesFormat = "seconds";
+        }
 
         //Encontrar Botoes
         satellite = (Button) findViewById(R.id.mapButtonSatellite);
@@ -36,6 +82,11 @@ public class Configurar extends Activity {
         map3dButtonOff = (Button) findViewById(R.id.map3dButtonOff);
         unitSpeedKm = (Button) findViewById(R.id.unitSpeedKm);
         unitSpeedMph = (Button) findViewById(R.id.unitSpeedMph);
+        cameraLockButtonOn = (Button)findViewById(R.id.cameraLockButtonOn);
+        cameraLockButtonOff = (Button) findViewById(R.id.cameraLockButtonOff);
+        degreesButton = (Button) findViewById(R.id.degreesButton);
+        minutesButton = (Button) findViewById(R.id.minutesButton);
+        secondsButton = (Button) findViewById(R.id.secondsButton);
 
         //Botao Satelite
         satellite.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +119,7 @@ public class Configurar extends Activity {
                 traffic = true;
                 trafficOn.setBackgroundColor(Color.parseColor("#03A9F4"));
                 trafficOff.setBackgroundColor(Color.parseColor("#BDBDBD"));
+
             }
         });
         //Botao Trafego Desativado
@@ -77,6 +129,7 @@ public class Configurar extends Activity {
                 traffic = false;
                 trafficOff.setBackgroundColor(Color.parseColor("#03A9F4"));
                 trafficOn.setBackgroundColor(Color.parseColor("#BDBDBD"));
+
             }
         });
 
@@ -128,12 +181,67 @@ public class Configurar extends Activity {
                 unitSpeedMph.setBackgroundColor(Color.parseColor("#BDBDBD"));
             }
         });
+
+        //Botao MPH
         unitSpeedMph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 unitSpeed = "mph";
                 unitSpeedMph.setBackgroundColor(Color.parseColor("#03A9F4"));
                 unitSpeedKm.setBackgroundColor(Color.parseColor("#BDBDBD"));
+            }
+        });
+
+        //Botao Travar Camera
+        cameraLockButtonOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraLock = true;
+                cameraLockButtonOn.setBackgroundColor(Color.parseColor("#03A9F4"));
+                cameraLockButtonOff.setBackgroundColor(Color.parseColor("#BDBDBD"));
+            }
+        });
+
+        //Botao Destravar Camera
+        cameraLockButtonOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraLock = false;
+                cameraLockButtonOff.setBackgroundColor(Color.parseColor("#03A9F4"));
+                cameraLockButtonOn.setBackgroundColor(Color.parseColor("#BDBDBD"));
+            }
+        });
+
+        //Coordenadas em DEGRAU
+        degreesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                coordinatesFormat = "degrees";
+                degreesButton.setBackgroundColor(Color.parseColor("#03A9F4"));
+                minutesButton.setBackgroundColor(Color.parseColor("#BDBDBD"));
+                secondsButton.setBackgroundColor(Color.parseColor("#BDBDBD"));
+            }
+        });
+
+        //Coordenadas em DEGRAU-MINUTO
+        minutesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                coordinatesFormat = "minutes";
+                minutesButton.setBackgroundColor(Color.parseColor("#03A9F4"));
+                degreesButton.setBackgroundColor(Color.parseColor("#BDBDBD"));
+                secondsButton.setBackgroundColor(Color.parseColor("#BDBDBD"));
+            }
+        });
+
+        //Coordenadas em DEGRAU-MINUTO-SEGUNDO
+        secondsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                coordinatesFormat = "seconds";
+                secondsButton.setBackgroundColor(Color.parseColor("#03A9F4"));
+                degreesButton.setBackgroundColor(Color.parseColor("#BDBDBD"));
+                minutesButton.setBackgroundColor(Color.parseColor("#BDBDBD"));
             }
         });
 
@@ -155,13 +263,27 @@ public class Configurar extends Activity {
                 } else {
                     sharedPreferences.edit().putBoolean("indoors", false).apply();}
                 if (map3d) {
-                    sharedPreferences.edit().putBoolean("3dmap", true).apply();
+                    sharedPreferences.edit().putBoolean("map3d", true).apply();
                 } else {
-                    sharedPreferences.edit().putBoolean("3dmap", false).apply();}
+                    sharedPreferences.edit().putBoolean("map3d", false).apply();}
                 if(unitSpeed.equals("kmh")){
                     sharedPreferences.edit().putString("unitspeed","kmh").apply();
                 }else{
                     sharedPreferences.edit().putString("unitspeed","mph").apply();
+                }
+                if(cameraLock){
+                    sharedPreferences.edit().putBoolean("cameralock",true).apply();
+                }else{
+                    sharedPreferences.edit().putBoolean("cameralock",false).apply();
+                }
+                if(coordinatesFormat.equals("degrees")){
+                    sharedPreferences.edit().putString("coordinatesformat","degrees").apply();
+                }
+                if(coordinatesFormat.equals("minutes")){
+                    sharedPreferences.edit().putString("coordinatesformat","minutes").apply();
+                }
+                if(coordinatesFormat.equals("seconds")) {
+                    sharedPreferences.edit().putString("coordinatesformat","seconds").apply();
                 }
                 Toast.makeText(getApplicationContext(), "Configuracoes Salvas!", Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(getApplicationContext(), MapsActivity.class);
@@ -169,8 +291,9 @@ public class Configurar extends Activity {
                 finish();
             }
         });
+
         //Botao sair
-        exitButton = (Button) findViewById(R.id.exitButton);
+        Button exitButton = (Button) findViewById(R.id.exitButton);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

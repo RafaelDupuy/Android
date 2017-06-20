@@ -44,6 +44,19 @@
     android:padding="10dp"
     android:layout_marginTop="20dp"
     android:paddingRight="10dp"
-    android:id="@+id/Coordenadas"
-    android:background="@android:color/white"/>
+    android:id="@+id/Velocidade"
+    android:background="@android:color/white"
+    android:textColor="@android:color/background_dark"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingRight="10dp"
+        android:id="@+id/Coordenadas"
+        android:background="@android:color/white"
+        android:textColor="@android:color/background_dark"/>
+
 </fragment>

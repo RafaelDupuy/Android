@@ -2,66 +2,72 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/mapType"
+    <Button
+        android:id="@+id/mapButtonNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:text="Tipo de Mapa"
-        android:textColor="@android:color/background_dark"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView3" />
+        android:layout_column="1"
+        android:layout_row="0"
+        android:text="Normal"
+        android:textSize="10sp"
+        android:layout_below="@+id/mapType"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/mapButtonSatellite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/mapType"
-        android:layout_marginTop="7dp"
+        android:layout_column="2"
+        android:layout_row="0"
         android:text="Satelite"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:layout_above="@+id/textView2"
+        android:layout_toEndOf="@+id/mapButtonNormal" />
 
-    <Button
-        android:id="@+id/mapButtonNormal"
+    <TextView
+        android:id="@+id/mapType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/mapButtonSatellite"
-        android:layout_alignBottom="@+id/mapButtonSatellite"
-        android:layout_toEndOf="@+id/mapButtonSatellite"
-        android:text="Normal"
-        android:textSize="10sp" />
+        android:layout_column="0"
+        android:layout_row="0"
+        android:text="Tipo de Mapa"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/mapType"
-        android:layout_below="@+id/mapButtonSatellite"
-        android:layout_marginTop="8dp"
+        android:layout_column="0"
+        android:layout_row="3"
         android:text="Trafego"
         android:textColor="@android:color/background_dark"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/mapButtonNormal"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/trafficButtonOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="6dp"
+        android:layout_column="1"
+        android:layout_row="5"
         android:text="Ligado"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/trafficButtonOff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/trafficButtonOn"
-        android:layout_alignBottom="@+id/trafficButtonOn"
+        android:layout_above="@+id/textView3"
+        android:layout_column="2"
+        android:layout_row="4"
         android:layout_toEndOf="@+id/trafficButtonOn"
         android:text="Desligado"
         android:textSize="10sp" />
@@ -70,117 +76,250 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_column="0"
+        android:layout_row="6"
+        android:layout_x="267dp"
+        android:layout_y="94dp"
         android:text="Mapas Internos"
         android:textColor="@android:color/background_dark"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_below="@+id/trafficButtonOn"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="12dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/indoorsButtonOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="10dp"
+        android:layout_column="1"
+        android:layout_row="8"
         android:text="Ligado"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/indoorsButtonOff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_row="7"
+        android:text="Desligado"
+        android:textSize="10sp"
         android:layout_alignBaseline="@+id/indoorsButtonOn"
         android:layout_alignBottom="@+id/indoorsButtonOn"
-        android:layout_alignStart="@+id/trafficButtonOff"
-        android:text="Desligado"
-        android:textSize="10sp" />
+        android:layout_toEndOf="@+id/trafficButtonOn" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_column="0"
+        android:layout_row="2"
+        android:layout_x="315dp"
+        android:layout_y="153dp"
         android:text="Construcoes 3D"
         android:textColor="@android:color/background_dark"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_below="@+id/indoorsButtonOn"
-        android:layout_alignStart="@+id/textView3" />
+        android:layout_marginStart="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/mapButtonSatellite" />
 
     <Button
         android:id="@+id/map3dButtonOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView5"
-        android:layout_marginTop="11dp"
+        android:layout_column="1"
+        android:layout_row="9"
+        android:layout_x="101dp"
+        android:layout_y="196dp"
         android:text="Ligado"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:layout_below="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
 
     <Button
         android:id="@+id/map3dButtonOff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="3"
+        android:layout_x="273dp"
+        android:layout_y="120dp"
+        android:text="Desligado"
+        android:textSize="10sp"
         android:layout_alignBaseline="@+id/map3dButtonOn"
         android:layout_alignBottom="@+id/map3dButtonOn"
-        android:layout_alignStart="@+id/indoorsButtonOff"
-        android:text="Desligado"
-        android:textSize="10sp" />
+        android:layout_toEndOf="@+id/map3dButtonOn" />
 
-    <Button
-        android:id="@+id/exitButton"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sair"
-        android:textSize="10sp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView5"
-        android:layout_marginBottom="9dp" />
+        android:layout_column="0"
+        android:layout_row="5"
+        android:layout_x="287dp"
+        android:layout_y="124dp"
+        android:text="Camera"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignEnd="@+id/textView5"
+        android:layout_marginEnd="21dp" />
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/cameraLockButtonOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Salvar"
+        android:layout_column="1"
+        android:layout_row="11"
+        android:layout_x="105dp"
+        android:layout_y="162dp"
+        android:text="Ativado"
         android:textSize="10sp"
-        android:layout_alignBaseline="@+id/exitButton"
-        android:layout_alignBottom="@+id/exitButton"
-        android:layout_toEndOf="@+id/unitSpeedKm" />
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/map3dButtonOn" />
+
+    <Button
+        android:id="@+id/cameraLockButtonOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_row="10"
+        android:layout_x="295dp"
+        android:layout_y="163dp"
+        android:text="Desativado"
+        android:textSize="10sp"
+        android:layout_below="@+id/textView"
+        android:layout_toEndOf="@+id/cameraLockButtonOn" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="1"
+        android:layout_x="368dp"
+        android:layout_y="121dp"
         android:text="Unidade Velocidade"
         android:textColor="@android:color/background_dark"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_alignBaseline="@+id/mapType"
-        android:layout_alignBottom="@+id/mapType"
-        android:layout_alignEnd="@+id/unitSpeedMph" />
+        android:layout_alignBaseline="@+id/textView5"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignStart="@+id/unitSpeedKm" />
 
     <Button
         android:id="@+id/unitSpeedKm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/mapButtonNormal"
-        android:layout_alignBottom="@+id/mapButtonNormal"
-        android:layout_toEndOf="@+id/mapButtonNormal"
+        android:layout_column="2"
+        android:layout_row="9"
+        android:layout_x="97dp"
+        android:layout_y="126dp"
         android:text="Km/h"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:layout_alignBaseline="@+id/unitSpeedMph"
+        android:layout_alignBottom="@+id/unitSpeedMph"
+        android:layout_toEndOf="@+id/map3dButtonOff"
+        android:layout_marginStart="35dp" />
 
     <Button
         android:id="@+id/unitSpeedMph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="6"
+        android:layout_x="33dp"
+        android:layout_y="186dp"
         android:text="Mph"
         android:textSize="10sp"
-        android:layout_alignBaseline="@+id/unitSpeedKm"
-        android:layout_alignBottom="@+id/unitSpeedKm"
-        android:layout_toEndOf="@+id/unitSpeedKm" />
+        android:layout_above="@+id/textView2"
+        android:layout_toEndOf="@+id/unitSpeedKm"
+        android:layout_marginStart="9dp" />
+
+    <TextView
+        android:id="@+id/Coordenadas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="4"
+        android:layout_x="232dp"
+        android:layout_y="49dp"
+        android:text="Coordenadas"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/unitSpeedMph"
+        android:layout_alignStart="@+id/unitSpeedKm"
+        android:layout_marginStart="22dp" />
+
+    <Button
+        android:id="@+id/secondsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_row="8"
+        android:layout_x="129dp"
+        android:layout_y="139dp"
+        android:text="Grau-minuto-segundo"
+        android:textSize="10sp"
+        android:layout_below="@+id/minutesButton"
+        android:layout_alignStart="@+id/Coordenadas" />
+
+    <Button
+        android:id="@+id/minutesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_row="6"
+        android:layout_x="254dp"
+        android:layout_y="244dp"
+        android:text="Grau-minuto"
+        android:textSize="10sp"
+        android:layout_above="@+id/textView3"
+        android:layout_alignEnd="@+id/textView6" />
+
+    <Button
+        android:id="@+id/degreesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="4"
+        android:layout_x="90dp"
+        android:layout_y="215dp"
+        android:text="Grau"
+        android:textSize="10sp"
+        android:layout_below="@+id/Coordenadas"
+        android:layout_alignStart="@+id/unitSpeedKm" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_row="5"
+        android:layout_x="110dp"
+        android:layout_y="158dp"
+        android:text="Salvar"
+        android:textSize="10sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/exitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="7"
+        android:layout_x="8dp"
+        android:layout_y="175dp"
+        android:text="Sair"
+        android:textSize="10sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

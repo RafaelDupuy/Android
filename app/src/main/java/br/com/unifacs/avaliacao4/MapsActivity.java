@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -28,15 +29,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private LocationManager locationManager;
-    private Location location;
-    private LatLng localizacao;
-    private TextView coordenadas;
+    private TextView coordenadas,velocidade;
     private double latitude,longitude;
     SharedPreferences sharedPreferences;
     MarkerOptions marker;
-
+    private float speed;
     private Button configurar,fechar;
     private int contador;
+    private String strLat,strLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +49,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         contador = 0;
 
         //Localizar Botoes e texto
+        velocidade = (TextView) findViewById(R.id.Velocidade);
+        velocidade.setVisibility(View.INVISIBLE);
         coordenadas = (TextView) findViewById(R.id.Coordenadas);
+        coordenadas.setVisibility(View.INVISIBLE);
         configurar = (Button) findViewById(R.id.Configurar);
         configurar.setVisibility(View.INVISIBLE);
         fechar = (Button)findViewById(R.id.Fechar);
         fechar.setVisibility(View.INVISIBLE);
         Button menu = (Button) findViewById(R.id.Menu);
 
+        //Configuracao Landscape
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            velocidade.setVisibility(View.VISIBLE);
+            coordenadas.setVisibility(View.VISIBLE);
+        }
 
         //Carregar SharedPreferences e configuracao pela primeira vez
         sharedPreferences = getSharedPreferences("Myprefs",Context.MODE_PRIVATE);
+
         if (sharedPreferences.getBoolean("firstrun", true)) {
             Toast.makeText(getApplicationContext(), "Bem vindo! Configure o app pela primeira vez!", Toast.LENGTH_LONG).show();
             Intent myIntent = new Intent(getApplicationContext(),Configurar.class);
@@ -69,6 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             sharedPreferences.edit().putBoolean("indoors",false).apply();
             sharedPreferences.edit().putBoolean("map3d",false).apply();
             sharedPreferences.edit().putString("unitspeed","kmh").apply();
+            sharedPreferences.edit().putString("coordinatesformat","seconds").apply();
         }
 
         //Botao Menu
@@ -86,7 +96,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(contador == 10) {
                     Intent myIntent = new Intent(getApplicationContext(),Creditos.class);
                     startActivity(myIntent);
-                    finish();
                 }
             }
         });
@@ -114,59 +123,74 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(getApplicationContext(), "Sem permissoes", Toast.LENGTH_SHORT).show();
         } else {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,3000,1,this);
-            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,3000,1,this);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if(location == null){
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,this);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
             }
         }
     }
-    //Google Maps Pronto
+    //Google Maps Pronto + configuracoes
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         marker = new MarkerOptions();
         marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker2));
-        if(sharedPreferences.getBoolean("firstrun",true)) {
-        }else{
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-13,-38.5), 16));}
-        if(sharedPreferences.getString("maptype","satellite").equals("satellite")){
+        if (sharedPreferences.getString("maptype", "satellite").equals("satellite")) {
             mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);}
-        if(sharedPreferences.getString("maptype","normal").equals("normal")){
+        if (sharedPreferences.getString("maptype", "normal").equals("normal")) {
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);}
-        if(sharedPreferences.getBoolean("traffic",true)){
+        if (sharedPreferences.getBoolean("traffic", true)) {
             mMap.setTrafficEnabled(true);
-        }else{
+        } else {
             mMap.setTrafficEnabled(false);}
-        if(sharedPreferences.getBoolean("indoors",true)){
+        if (sharedPreferences.getBoolean("indoors", true)) {
             mMap.setIndoorEnabled(true);
-        }else{
+        } else {
             mMap.setIndoorEnabled(false);}
-        if(sharedPreferences.getBoolean("map3d",true)){
+        if (sharedPreferences.getBoolean("map3d", true)) {
             mMap.setBuildingsEnabled(true);
-        }else{
+        } else {
             mMap.setBuildingsEnabled(false);}
-
+        if (sharedPreferences.getBoolean("cameralock", true)) {
+            mMap.getUiSettings().setRotateGesturesEnabled(false);
+        } else {
+            mMap.getUiSettings().setRotateGesturesEnabled(true);}
     }
-    //Atualizar localizacao
+    //Atualizar localizacao + unidade de velocidade
     public void atualizarMapa(){
-        localizacao = new LatLng(latitude, longitude);
+        LatLng localizacao = new LatLng(latitude, longitude);
         mMap.clear();
         marker.position(localizacao).title("Coordenadas: " +localizacao);
         mMap.addMarker(marker);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(localizacao));
-        if(sharedPreferences.getString("unitspeed","kmh").equals("kmh")){
-            coordenadas.setText("Velocidade em KM/H: " + (location.getSpeed()* 3600));
-        }else{
-            coordenadas.setText("Velocidade em MPH: " + ((location.getSpeed()* 3600)*0.621371));
+        if (sharedPreferences.getString("unitspeed", "kmh").equals("kmh")) {
+            velocidade.setText("Velocidade em KM/H: " + (speed * 3.6));
+        } else {
+            velocidade.setText("Velocidade em MPH: " + ((speed) * 3.6) * 0.621371);
         }
+        coordenadas.setText("Latitude : " + strLat + "|" + "Longitude: " + strLng);
 
     }
-    //Mudar lat e long quando localizacao mudar
+
+    //Informacoes GPS quando localizacao mudar + formato da latitude | longitude
     @Override
     public void onLocationChanged(Location location) {
+        speed = location.getSpeed();
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        if(sharedPreferences.getString("coordinatesformat","degrees").equals("degrees")){
+            strLat = location.convert(latitude,location.FORMAT_DEGREES);
+            strLng = location.convert(longitude,location.FORMAT_DEGREES);
+        }
+        if(sharedPreferences.getString("coordinatesformat","minutes").equals("minutes")){
+            strLat = location.convert(latitude,location.FORMAT_MINUTES);
+            strLng = location.convert(longitude,location.FORMAT_MINUTES);
+        }
+        if(sharedPreferences.getString("coordinatesformat","seconds").equals("seconds")){
+            strLat = location.convert(latitude,location.FORMAT_SECONDS);
+            strLng = location.convert(longitude,location.FORMAT_SECONDS);
+        }
         atualizarMapa();
     }
     @Override
@@ -178,6 +202,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onProviderDisabled(String provider) {
     }
+
     @Override
     //Remover GPS quando fechar app
     protected void onDestroy() {
