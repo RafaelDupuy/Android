@@ -161,7 +161,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void atualizarMapa(){
         LatLng localizacao = new LatLng(latitude, longitude);
         mMap.clear();
-        marker.position(localizacao).title("Coordenadas: " +localizacao);
         mMap.addMarker(marker);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(localizacao));
         if (sharedPreferences.getString("unitspeed", "kmh").equals("kmh")) {
