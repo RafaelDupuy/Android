@@ -96,6 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(contador == 10) {
                     Intent myIntent = new Intent(getApplicationContext(),Creditos.class);
                     startActivity(myIntent);
+                    finish();
                 }
             }
         });
