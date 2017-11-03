@@ -27,7 +27,7 @@ public class Creditos extends Activity {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.creditos);
         TextView creditos = (TextView)findViewById(R.id.creditos);
         creditos.setTextColor(Color.parseColor("#3F51B5"));
-        creditos.setText("Creditos \n\n"+ "Rafael Ferreira Dupuy de Lome" +"\n"+"Lucas Morais Da Silva \n"+"Wendel Rezende Costa \n"+"Mariana Maria Ribeiro Costa  \n"+"Marco Aurelio \n"+"Vinicius 'Malhado' \n");
+        creditos.setText("Creditos \n\n"+ "Rafael Ferreira Dupuy de Lome");
         creditos.startAnimation(animation);
 
         //Audio
